@@ -23,15 +23,21 @@ clickButton.addEventListener('click', () => {
 upgradeButton.addEventListener('click', () => {
     const currentUpgrade = upgrades[upgradeLevel];
     
-    if (clickCount >= currentUpgrade.cost) {
-        clickCount -= currentUpgrade.cost;
+    if (clickCount >= currentUpgrade?.cost) {
+        clickCount -= currentUpgrade?.cost;
         upgradeLevel++;
         clickCountDisplay.textContent = clickCount;
         upgradeLevelDisplay.textContent = upgradeLevel;
-        upgradeButton.textContent = `Upgrade ${upgradeLevel + 1} (Price: ${upgrades[upgradeLevel].cost})`;
+
+        if (upgrades[upgradeLevel]?.cost) {
+            upgradeButton.textContent = `Upgrade ${upgradeLevel + 1} (Price: ${upgrades[upgradeLevel].cost})`;
+        }
 
         const upgradeListItem = document.createElement('li');
-        upgradeListItem.textContent = `${currentUpgrade.name} (multiplier: x${currentUpgrade.multiplier})`;
-        upgradeList.appendChild(upgradeListItem);
+
+        if (currentUpgrade?.name && currentUpgrade?.multiplier) {
+            upgradeListItem.textContent = `${currentUpgrade.name} (multiplier: x${currentUpgrade.multiplier})`;
+            upgradeList.appendChild(upgradeListItem);
+        }
     }
 });
